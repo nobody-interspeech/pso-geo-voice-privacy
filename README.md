@@ -1,4 +1,3 @@
-````markdown
 # PSO Evaluation with Geographic Side Information in Voice Data
 
 This repository contains the code used to evaluate **singling-out risk in anonymized speech data** using the **Predicate Singling-Out (PSO)** framework combined with **geographic side information**.
@@ -27,7 +26,7 @@ Clone this repository:
 ```bash
 git clone https://github.com/nobody-interspeech/pso-geo-voice-privacy.git
 cd pso-geo-voice-privacy
-````
+```
 
 Install dependencies:
 
