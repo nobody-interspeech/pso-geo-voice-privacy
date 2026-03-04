@@ -70,30 +70,6 @@ Il représente le nombre de résidents recensés dans cette tranche d’âge au 
 
 fname = "Output_Area_to_Lower_layer_Super_Output_Area_to_Middle_layer_Super_Output_Area_to_Local_Authority_District_(December_2021)_Lookup_in_England_and_Wales_v3.csv"
 
-def load_table(path: str) -> pd.DataFrame:
-    ext = os.path.splitext(path)[1].lower()
-
-    if ext in [".csv"]:
-        return pd.read_csv(path)
-    if ext in [".tsv"]:
-        return pd.read_csv(path, sep="\t")
-    if ext in [".txt"]:
-
-        df = pd.read_csv(path, sep="\t", engine="python")
-        if df.shape[1] == 1:
-            df = pd.read_csv(path, sep=r"\s+", engine="python")
-        return df
-    if ext in [".parquet"]:
-        return pd.read_parquet(path)
-    if ext in [".xlsx", ".xls"]:
-        return pd.read_excel(path)
-
-
-    try:
-        return pd.read_csv(path)
-    except Exception:
-        return pd.read_csv(path, sep="\t", engine="python")
-
 df = load_table(fname)
 print("Shape:", df.shape)
 print("Columns:", list(df.columns))
@@ -792,7 +768,7 @@ def build_households_within_oa_mf_pairs(df_oa: pd.DataFrame, rng: np.random.Gene
     while i < len(pool):
         rem = len(pool) - i
         if rem >= 3:
-            take = 3 if rem != 4 else
+            take = 4 if rem == 4 else 3
             hh_id = new_hh_id()
             for spk in pool[i:i+take]:
                 rows.append((spk, hh_id, "3+", None))
