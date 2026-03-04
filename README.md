@@ -226,29 +226,28 @@ plot_all.py
 
 ## Pipeline Diagram
 
-The experiment compares singling-out risk under two attacker scenarios: an **audio-only attacker** and an attacker with **additional geographic side information**.
-
 ```mermaid
 flowchart TD
-A[Common Voice v11] --> B[Prepare Kaldi metadata]
-B --> C[Split speakers into A and B]
+CV[Common Voice v11]
+LS[LibriSpeech train-clean-360]
+Anon[Anonymize with B1]
+ECAPA[Fine-tune ECAPA-TDNN<br/>on anonymized speech]
+XVec[Extract x-vectors<br/>for A and B]
+PSO[PSO Evaluation]
+Audio[Audio-only]
+Geo[Audio + Geolocation]
+Results[Generate plots]
 
-D[LibriSpeech train-clean-360] --> E[Anonymize with B1]
-C --> F[Anonymize A and B with B1]
-E --> G[Fine-tune ECAPA-TDNN with SIDEKIT]
-
-F --> H[Extract x-vectors for A and B]
-G --> H
-
-H --> I{PSO evaluation}
-
-I --> J[Audio-only PSO]
-J --> K[Plot audio results: plot_singout_combined.py]
-
-I --> L[Geo-constrained PSO]
-M[UK Census data] --> N[Build geolocation.csv]
-N --> L
-L --> O[Plot geo results: plot_all.py]
+CV --> Anon
+LS --> Anon
+Anon --> ECAPA
+Anon --> XVec
+ECAPA --> XVec
+XVec --> PSO
+PSO --> Audio
+PSO --> Geo
+Audio --> Results
+Geo --> Results
 ```
 
 ## Folder Structure
