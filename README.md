@@ -224,32 +224,6 @@ Generate plots with:
 plot_all.py
 ```
 
-## Pipeline Diagram
-
-```mermaid
-flowchart TD
-CV[Common Voice v11]
-LS[LibriSpeech train-clean-360]
-Anon[Anonymize with B1]
-ECAPA[Fine-tune ECAPA-TDNN<br/>on anonymized speech]
-XVec[Extract x-vectors<br/>for A and B]
-PSO[PSO Evaluation]
-Audio[Audio-only]
-Geo[Audio + Geolocation]
-Results[Generate plots]
-
-CV --> Anon
-LS --> Anon
-Anon --> ECAPA
-Anon --> XVec
-ECAPA --> XVec
-XVec --> PSO
-PSO --> Audio
-PSO --> Geo
-Audio --> Results
-Geo --> Results
-```
-
 ## Folder Structure
 
 ```
