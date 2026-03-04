@@ -1,3 +1,4 @@
+````markdown
 # PSO Evaluation with Geographic Side Information in Voice Data
 
 This repository contains the code used to evaluate **singling-out risk in anonymized speech data** using the **Predicate Singling-Out (PSO)** framework combined with **geographic side information**.
@@ -17,7 +18,7 @@ The goal is to study how **geographic attributes at different spatial resolution
 5. Clone SIDEKIT and fine-tune an **ECAPA-TDNN** speaker embedding extractor on **anonymized LibriSpeech** (semi-informed attacker).
 6. Extract x-vectors for anonymized A and B using SIDEKIT (`extract_xvector.py`).
 7. Run PSO singling-out evaluation (`compute_iso_devTrue_plot2.py`) and plot results (`plot_singout_combined.py`).
-8. Download UK Census geographic statistics (Nomis), build `geolocation.csv`, run geographic PSO evaluation (`pso_geo_all.py`), and plot (`plot_all.py`).
+8. Download UK Census geographic statistics from Nomis, build `geolocation.csv`, run geographic PSO evaluation (`pso_geo_all.py`), and plot (`plot_all.py`).
 
 ## Installation
 
@@ -26,7 +27,7 @@ Clone this repository:
 ```bash
 git clone https://github.com/nobody-interspeech/pso-geo-voice-privacy.git
 cd pso-geo-voice-privacy
-```
+````
 
 Install dependencies:
 
@@ -44,14 +45,14 @@ Download the **English subset of Mozilla Common Voice v11**.
 
 Prepare Kaldi-style metadata:
 
-- `spk2utt`
-- `utt2spk`
-- `spk2gender`
+* `spk2utt`
+* `utt2spk`
+* `spk2gender`
 
 Split the dataset into:
 
-- **Subset A**: evaluation speakers
-- **Subset B**: predicate construction speakers
+* **Subset A**: evaluation speakers
+* **Subset B**: predicate construction speakers
 
 Create `wav.scp` for each subset (A and B), listing all utterance paths.
 
@@ -59,7 +60,7 @@ Create `wav.scp` for each subset (A and B), listing all utterance paths.
 
 Download LibriSpeech:
 
-- `train-clean-360`
+* `train-clean-360`
 
 This dataset is used to train the semi-informed attacker embedding extractor.
 
@@ -73,9 +74,9 @@ git clone https://github.com/Voice-Privacy-Challenge/Voice-Privacy-Challenge-202
 
 Use the **Baseline B1** anonymization system from the VPC2022 repository to anonymize:
 
-- Common Voice subset **A**
-- Common Voice subset **B**
-- LibriSpeech **train-clean-360**
+* Common Voice subset **A**
+* Common Voice subset **B**
+* LibriSpeech **train-clean-360**
 
 After this step, you should have anonymized WAV files for A, B, and LibriSpeech.
 
@@ -113,22 +114,22 @@ LibriSpeech_B1/
 
 ### Model and training settings
 
-- Architecture: **ECAPA-TDNN**
-- Embedding dimension: **256**
-- Pooling: Attentive Statistics Pooling
-- Loss: Circle loss
-- Sample rate: **16 kHz**
-- Segment duration: **3 s**
+* Architecture: **ECAPA-TDNN**
+* Embedding dimension: **256**
+* Pooling: Attentive Statistics Pooling
+* Loss: Circle loss
+* Sample rate: **16 kHz**
+* Segment duration: **3 s**
 
 Example training hyperparameters:
 
-- Batch size: **192**
-- Epochs: **50**
-- Optimizer: **AdamW**
-- Learning rate: **1e-3**
-- Scheduler: OneCycleLR
-- Validation split: **2%**
-- Mixed precision: enabled
+* Batch size: **192**
+* Epochs: **50**
+* Optimizer: **AdamW**
+* Learning rate: **1e-3**
+* Scheduler: OneCycleLR
+* Validation split: **2%**
+* Mixed precision: enabled
 
 ### Configuration files
 
@@ -172,13 +173,13 @@ model_libri_b1_ecapa/
 
 SIDEKIT provides `extract_xvector.py`. Configure it to load:
 
-- the fine-tuned model (`best_model.pt`) for the **semi-informed attacker**
-- the original pre-trained model for the **ignorant attacker**
+* the fine-tuned model (`best_model.pt`) for the **semi-informed attacker**
+* the original pre-trained model for the **ignorant attacker**
 
 Then extract x-vectors for anonymized:
 
-- Common Voice subset **A**
-- Common Voice subset **B**
+* Common Voice subset **A**
+* Common Voice subset **B**
 
 These embeddings are used in the PSO evaluation.
 
@@ -198,9 +199,9 @@ plot_singout_combined.py
 
 ## Step 7 — Geographic Side Information
 
-Geographic statistics are obtained from **Nomis**:
+Geographic statistics are obtained from Nomis:
 
-https://www.nomisweb.co.uk
+[https://www.nomisweb.co.uk](https://www.nomisweb.co.uk)
 
 The script `geolocation_data_code.py` generates the metadata file:
 
@@ -230,29 +231,25 @@ The experiment compares singling-out risk under two attacker scenarios: an **aud
 
 ```mermaid
 flowchart TD
-
 A[Common Voice v11] --> B[Prepare Kaldi metadata]
 B --> C[Split speakers into A and B]
 
 D[LibriSpeech train-clean-360] --> E[Anonymize with B1]
-
 C --> F[Anonymize A and B with B1]
-E --> G[Fine-tune ECAPA-TDNN using SIDEKIT]
+E --> G[Fine-tune ECAPA-TDNN with SIDEKIT]
 
 F --> H[Extract x-vectors for A and B]
 G --> H
 
-H --> I{PSO Evaluation}
+H --> I{PSO evaluation}
 
 I --> J[Audio-only PSO]
-J --> K[Plot results<br>plot_singout_combined.py]
+J --> K[Plot audio results: plot_singout_combined.py]
 
-I --> L[PSO with geographic constraints]
-
-M[UK Census data (Nomis)] --> N[Generate geolocation.csv]
+I --> L[Geo-constrained PSO]
+M[UK Census data] --> N[Build geolocation.csv]
 N --> L
-
-L --> O[Plot geo results<br>plot_all.py]
+L --> O[Plot geo results: plot_all.py]
 ```
 
 ## Folder Structure
@@ -281,4 +278,7 @@ pso-geo-voice-privacy/
         ├── spk2gender
         ├── spk2utt
         └── utt2spk
+```
+
+```
 ```
