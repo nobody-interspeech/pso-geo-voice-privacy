@@ -27,7 +27,7 @@ Clone this repository:
 ```bash
 git clone https://github.com/nobody-interspeech/pso-geo-voice-privacy.git
 cd pso-geo-voice-privacy
-```
+````
 
 Install dependencies:
 
@@ -278,6 +278,4 @@ pso-geo-voice-privacy/
         ├── spk2gender
         ├── spk2utt
         └── utt2spk
-```
-
 ```
