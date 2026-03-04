@@ -346,7 +346,9 @@ if __name__ == '__main__':
         N_RUNS = 5
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('L', type=int)
+    parser.add_argument('L', type=int, help='Length of conversations')
+    parser.add_argument('--enroll-folder', required=True, help='Path to enrollment folder (dataset pool)')
+    parser.add_argument('--trial-folder', required=True, help='Path to trial folder (predicates source)')
     args = parser.parse_args()
     L = args.L
     if not L:
@@ -357,10 +359,8 @@ if __name__ == '__main__':
     # IMPORTANT (roles):
     # - trial_folder: split used to create predicate speakers (attackers)
     # - enroll_folder: split used as the dataset pool (all speakers), filtered by K >= 2*L
-    #
-    # Adjust if your actual folders are swapped, but keep the meaning above.
-    enroll_folder = "/vol/das-nobackup/users/ethiombiano/lastOne/kaldi_data/test"
-    trial_folder = "/vol/das-nobackup/users/ethiombiano/lastOne/kaldi_data/enrollment"
+    enroll_folder = args.enroll_folder
+    trial_folder = args.trial_folder
 
     os.makedirs(results_dir, exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")

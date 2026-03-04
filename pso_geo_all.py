@@ -561,8 +561,9 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('L', type=int)
-    parser.add_argument('--geo-file', type=str,
-                        default='/srv/storage/talc3@storage4.nancy/multispeech/calcul/projets/data/geolocation.csv')
+    parser.add_argument('--enroll-folder', required=True, help='Path to enrollment folder (dataset pool)')
+    parser.add_argument('--trial-folder', required=True, help='Path to trial folder (predicates source)')
+    parser.add_argument('--geo-file', required=True, help='Path to geolocation CSV file')
     parser.add_argument('--geo-level', type=str, default='all',
                         choices=['all', 'none', 'MSOA', 'LSOA', 'OA', 'household_id'])
     parser.add_argument('--geo-known-fracs', type=str, default='1.0',
@@ -598,12 +599,8 @@ if __name__ == '__main__':
     # IMPORTANT:
     # - ENROLL = 22024 speakers => base dataset
     # - TRIAL  = 4949 speakers  => predicates + fallback utterances
-    enroll_spk2utt_folder = "/srv/storage/talc3@storage4.nancy/multispeech/calcul/projets/xvector_results/vpc_enroll"
-    trial_spk2utt_folder  = "/srv/storage/talc3@storage4.nancy/multispeech/calcul/projets/xvector_results/vpc_trial"
-
-    
-    enroll_folder = "/srv/storage/talc3@storage4.nancy/multispeech/calcul/projets/xvector_results/vpc_enroll_sidekit"
-    trial_folder  = "/srv/storage/talc3@storage4.nancy/multispeech/calcul/projets/xvector_results/vpc_trial_sidekit"
+    enroll_folder = args.enroll_folder
+    trial_folder = args.trial_folder
 
     file_handler = logging.FileHandler(f'{results_dir}/results.L{L}.{timestamp}.log')
     file_handler.setFormatter(formatter)
